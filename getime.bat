@@ -32,21 +32,24 @@ REM ----------------------------------------------------------------------------
 
 TITLE GETIME 
 
-
-REM PROCESO_almacenar Tiempo inicial-> pintarlo,PAUSAR, almacenar Tiempo final -> pintarlo 
+:Function_getTiempoInicial
+REM PROCESO_almacenar Tiempo inicial
 SET _tInicial=%TIME%
+
 TIMEOUT /T -1 >NUL
+
+:Function_getTiempoFinal
+REM PROCESO_almacenar Tiempo final
 SET _tFinal=%TIME%
 
-REM PROCESO_obtener unidades por separado y almacenando como valores numéricos 
+:Function_getUnidades
+REM PROCESO_obtener unidades por separado y almacenando como valores numéricos (mediante substring)
 ::tiempo inicial luego tiempo final (3 y 3 ) 
 ::INICIALES
 SET /A _centiSegInicial=%_tInicial:~9,2%
 SET /A _segInicial=%_tInicial:~6,2%
 SET /A _minInicial=%_tInicial:~3,2%
 SET /A _horaInicial=%_tInicial:~0,2%
-
-
 
 ::FINALES
 SET /A _centiSegFinal=%_tFinal:~9,2%
@@ -66,8 +69,6 @@ REM PROCESO_ALGORITMO DE CONVERSION
 
 :EOF 
 EXIT /B 0
-
-
 REM REVISA LA DOCUMENTACION DE 
 :: SET /A /? EL SIGUIENTE TEXTO ES MOSTRADO 
 :: 08 y 09 no son números válidos porque 8 y 9 no son dígitos octales válidos.
