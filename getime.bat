@@ -35,10 +35,8 @@ TITLE GETIME
 
 REM PROCESO_almacenar Tiempo inicial-> pintarlo,PAUSAR, almacenar Tiempo final -> pintarlo 
 SET _tInicial=%TIME%
-ECHO tiempo inicial %_tInicial%
 TIMEOUT /T -1 >NUL
 SET _tFinal=%TIME%
-ECHO tiempo final %_tFinal%
 
 REM PROCESO_obtener unidades por separado y almacenando como valores numéricos 
 ::tiempo inicial luego tiempo final (3 y 3 ) 
@@ -48,9 +46,7 @@ SET /A _segInicial=%_tInicial:~6,2%
 SET /A _minInicial=%_tInicial:~3,2%
 SET /A _horaInicial=%_tInicial:~0,2%
 
-REM DEBUG_tiempo inicial
-ECHO fulltime inicial %_tInicial%
-ECHO sub %_horaInicial%:%_minInicial%:%_segInicial%.%_centiSegInicial%
+
 
 ::FINALES
 SET /A _centiSegFinal=%_tFinal:~9,2%
@@ -58,9 +54,6 @@ SET /A _segFinal=%_tFinal:~6,2%
 SET /A _minFinal=%_tFinal:~3,2%
 SET /A _horaFinal=%_tFinal:~0,2%
 
-REM DEBUG_tiempo final
-ECHO FULLTIME FINAL %_tFinal%
-ECHO sub %_horaFinal%:%_minFinal%:%_segFinal%.%_centiSegFinal%
 
 
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
