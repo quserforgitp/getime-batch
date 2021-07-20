@@ -8,7 +8,7 @@ REM |        VERSION DEL PROGRAMA : V 1.0                                       
 REM |                                                                               |
 REM |        DESCRIPCION: EL PROGRAMA MIDE EL TIEMPO DE EJECUCION DE OTROS          |
 REM |                     PROGRAMAS BASÁNDOSE EN EL VALOR DE LA PSEUDO VARIABLE     |
-REM |                     %TIME% Y PINTA LA DURACION POR PANTALLA                   |
+REM |                     !TIME! Y PINTA LA DURACION POR PANTALLA                   |
 REM |                                                                               |
 REM |        AUTOR: HELIOS BARRERA HERNÁNDEZ                                        |
 REM |        CONTACTO: adealumnonegligas@gmail.com                                  |
@@ -32,46 +32,73 @@ REM ----------------------------------------------------------------------------
 
 TITLE GETIME 
 
-:Function_getTiempoInicial
+SETLOCAL EnableDelayedExpansion
+
+:Function_setTiempoInicial
 REM PROCESO_almacenar Tiempo inicial
-SET _tInicial=%TIME%
+SET _tInicial=08:09:09.09
 
 TIMEOUT /T -1 >NUL
 
-:Function_getTiempoFinal
+:Function_setTiempoFinal
 REM PROCESO_almacenar Tiempo final
-SET _tFinal=%TIME%
+SET _tFinal=09:08:08.08
 
-:Function_getUnidades
+:Function_setUnidades
 REM PROCESO_obtener unidades por separado y almacenando como valores numéricos (mediante substring)
 ::tiempo inicial luego tiempo final (3 y 3 ) 
-::INICIALES
-SET /A _centiSegInicial=%_tInicial:~9,2%
-SET /A _segInicial=%_tInicial:~6,2%
-SET /A _minInicial=%_tInicial:~3,2%
-SET /A _horaInicial=%_tInicial:~0,2%
+:::INICIALES
+SET _centiSegInicial=!_tInicial:~9,2!
+SET _segInicial=!_tInicial:~6,2!
+SET _minInicial=!_tInicial:~3,2!
+SET _horaInicial=!_tInicial:~0,2!
 
-::FINALES
-SET /A _centiSegFinal=%_tFinal:~9,2%
-SET /A _segFinal=%_tFinal:~6,2%
-SET /A _minFinal=%_tFinal:~3,2%
-SET /A _horaFinal=%_tFinal:~0,2%
 
+::CONDICIONALES BUG OCTALES
+:::INICIALES
+IF [!_centiSegInicial!] EQU [08] (SET /A _centiSegInicial=8 2> NUL &&echo !_centiSegInicial!) ELSE (SET /A _centiSegInicial=!_tInicial:~9,2! 2>NUL)
+IF [!_centiSegInicial!] EQU [09] (SET /A _centiSegInicial=9 2> NUL &&echo !_centiSegInicial!) ELSE (SET /A _centiSegInicial=!_tInicial:~9,2! 2>NUL)
+IF [!_segInicial!] EQU [08] (SET /A _segInicial=8 2> NUL &&echo !_segInicial!) ELSE (SET /A _SegInicial=!_tInicial:~6,2! 2>NUL)
+IF [!_segInicial!] EQU [09] (SET /A _segInicial=9 2> NUL &&echo !_segInicial!) ELSE (SET /A _SegInicial=!_tInicial:~6,2! 2>NUL)
+IF [!_minInicial!] EQU [08] (SET /A _minInicial=8 2> NUL &&echo !_minInicial!) ELSE (SET /A _minInicial=!_tInicial:~3,2! 2>NUL)
+IF [!_minInicial!] EQU [09] (SET /A _minInicial=9 2> NUL &&echo !_minInicial!) ELSE (SET /A _minInicial=!_tInicial:~3,2! 2>NUL)
+IF [!_horaInicial!] EQU [08] (SET /A _horaInicial=8 2> NUL &&echo !_horaInicial!) ELSE (SET /A _horaInicial=!_tInicial:~0,2! 2>NUL)
+IF [!_horaInicial!] EQU [09] (SET /A _horaInicial=9 2> NUL &&echo !_horaInicial!) ELSE (SET /A _horaInicial=!_tInicial:~0,2! 2>NUL)
+
+
+:::FINALES
+SET _centiSegFinal=!_tFinal:~9,2!
+SET _segFinal=!_tFinal:~6,2!
+SET _minFinal=!_tFinal:~3,2!
+SET _horaFinal=!_tFinal:~0,2!
+
+
+::CONDICIONALES BUG OCTALES
+:::FINALES
+IF [!_centiSegFinal!] EQU [08] (SET /A _centiSegFinal=8 2> NUL &&echo !_centiSegFinal!) ELSE (SET /A _centiSegFinal=!_tFinal:~9,2! 2>NUL)
+IF [!_centiSegFinal!] EQU [09] (SET /A _centiSegFinal=9 2> NUL &&echo !_centiSegFinal!) ELSE (SET /A _centiSegFinal=!_tFinal:~9,2! 2>NUL)
+IF [!_segFinal!] EQU [08] (SET /A _segFinal=8 2> NUL &&echo !_segFinal!) ELSE (SET /A _SegFinal=!_tFinal:~6,2! 2>NUL)
+IF [!_segFinal!] EQU [09] (SET /A _segFinal=9 2> NUL &&echo !_segFinal!) ELSE (SET /A _SegFinal=!_tFinal:~6,2! 2>NUL)
+IF [!_minFinal!] EQU [08] (SET /A _minFinal=8 2> NUL &&echo !_minFinal!) ELSE (SET /A _minFinal=!_tFinal:~3,2! 2>NUL)
+IF [!_minFinal!] EQU [09] (SET /A _minFinal=9 2> NUL &&echo !_minFinal!) ELSE (SET /A _minFinal=!_tFinal:~3,2! 2>NUL)
+IF [!_horaFinal!] EQU [08] (SET /A _horaFinal=8 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
+IF [!_horaFinal!] EQU [09] (SET /A _horaFinal=9 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
 
 
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
 
-IF [%_centiSegInicial%] GTR [%_centiSegFinal%] (ECHO centi %_centiSegInicial% es mayor que %_centiSegFinal%)
-IF [%_segInicial%] GTR [%_segFinal%] (ECHO  seg %_segInicial% es mayor que %_segFinal%)
-IF [%_minInicial%] GTR [%_minFinal%] (ECHO min %_minInicial% es mayor que %_minFinal%)
-IF [%_horaInicial%] GTR [%_horaFinal%] (ECHO hora %_horaInicial% es mayor que %_horaFinal%)
+IF [!_centiSegInicial!] GTR [!_centiSegFinal!] (ECHO centi !_centiSegInicial! es mayor que !_centiSegFinal!)
+IF [!_segInicial!] GTR [!_segFinal!] (ECHO  seg !_segInicial! es mayor que !_segFinal!)
+IF [!_minInicial!] GTR [!_minFinal!] (ECHO min !_minInicial! es mayor que !_minFinal!)
+IF [!_horaInicial!] GTR [!_horaFinal!] (ECHO hora !_horaInicial! es mayor que !_horaFinal!)
 
 REM DEBUG_tiempo final e incial
-ECHO inicial %_tInicial%
-echo final %_tFinal%
+ECHO inicial !_tInicial!
+echo final !_tFinal!
 	
 
 REM PROCESO_ALGORITMO DE CONVERSION
+:Function_setAlgoritmoConversion
 
 
 
