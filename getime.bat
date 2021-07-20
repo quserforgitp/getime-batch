@@ -61,6 +61,14 @@ SET /A _horaFinal=%_tFinal:~0,2%
 
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
 
+IF [%_centiSegInicial%] GTR [%_centiSegFinal%] (ECHO centi %_centiSegInicial% es mayor que %_centiSegFinal%)
+IF [%_segInicial%] GTR [%_segFinal%] (ECHO  seg %_segInicial% es mayor que %_segFinal%)
+IF [%_minInicial%] GTR [%_minFinal%] (ECHO min %_minInicial% es mayor que %_minFinal%)
+IF [%_horaInicial%] GTR [%_horaFinal%] (ECHO hora %_horaInicial% es mayor que %_horaFinal%)
+
+REM DEBUG_tiempo final e incial
+ECHO inicial %_tInicial%
+echo final %_tFinal%
 	
 
 REM PROCESO_ALGORITMO DE CONVERSION
