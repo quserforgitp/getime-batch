@@ -94,17 +94,47 @@ echo final !_tFinal!
 
 REM PROCESO_ALGORITMO DE CONVERSION
 :Function_setAlgoritmoConversionCentiSeg
-REM DEBUG_mensaje Function_setAlgoritmoConversionCentiSeg
-ECHO CentiSeg
+SET /A _centiSegFinal += 100
+SET /A _segFinal -= 1
+REM DEBUG_mensaje para poder saber si _centiSegFinal fue convertido junto a _segFinal
+ECHO el convertido centi !_centiSegFinal!
+ECHO el segfinal restado en una unidad !_segFinal!
+REM CONCICIONAL_para determinar si es necesaria la conversion siguiente unidad
+IF !_segInicial! GTR !_segFinal! (
+	GOTO Function_setAlgoritmoConversionSeg) ELSE (
+		IF !_minInicial! GTR !_minFinal! (
+			GOTO Function_setAlgoritmoConversionMin) ELSE (
+				GOTO Function_setAplicarFormula)
+		)
+
 :Function_setAlgoritmoConversionSeg
-REM DEBUG_mensaje Function_setAlgoritmoConversionCentiSeg
-ECHO Seg
+SET /A _SegFinal += 60
+SET /A _minFinal -= 1
+REM DEBUG_mensaje para poder saber si _segFinal fue convertido junto a _minFinal
+ECHO el convertido seg !_SegFinal!
+ECHO el min restado en una unidad !_minFinal!
+IF !_minInicial! GTR !_minFinal! (
+	GOTO Function_setAlgoritmoConversionMin) ELSE (
+		GOTO Function_setAplicarFormula)
+
 :Function_setAlgoritmoConversionMin
-REM DEBUG_mensaje Function_setAlgoritmoConversionCentiSeg
-ECHO Min
+SET /A _minFinal += 60
+SET /A _horaFinal -= 1
+REM DEBUG_mensaje para poder saber si _minFinal fue convertido junto a _horaFinal
+ECHO el convertido min !_minFinal!
+ECHO el hora restado en una unidad !_horaFinal!
+
+:Function_setAplicarFormula
+REM FORMULA_ Duracion = TF - TI.
+SET /A _horaDuracion = !_horaFinal! - !_horaInicial!
+SET /A _minDuracion = !_minFinal! - !_minInicial!
+SET /A _segDuracion = !_segFinal! - !_segInicial!
+SET /A _centiSegDuracion = !_centiSegFinal! - !_centiSegInicial!
 
 
-
+:Function_setMostrarDuracion
+ECHO DURACION:
+ECHO !_horaDuracion!:!_minDuracion!:!_segDuracion!.!_centiSegDuracion!
 
 :EOF 
 EXIT /B 0
