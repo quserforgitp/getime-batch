@@ -53,7 +53,6 @@ SET _segInicial=!_tInicial:~6,2!
 SET _minInicial=!_tInicial:~3,2!
 SET _horaInicial=!_tInicial:~0,2!
 
-
 ::CONDICIONALES BUG OCTALES
 :::INICIALES
 IF [!_centiSegInicial!] EQU [08] (SET /A _centiSegInicial=8 2> NUL &&echo !_centiSegInicial!) ELSE (SET /A _centiSegInicial=!_tInicial:~9,2! 2>NUL)
@@ -65,13 +64,11 @@ IF [!_minInicial!] EQU [09] (SET /A _minInicial=9 2> NUL &&echo !_minInicial!) E
 IF [!_horaInicial!] EQU [08] (SET /A _horaInicial=8 2> NUL &&echo !_horaInicial!) ELSE (SET /A _horaInicial=!_tInicial:~0,2! 2>NUL)
 IF [!_horaInicial!] EQU [09] (SET /A _horaInicial=9 2> NUL &&echo !_horaInicial!) ELSE (SET /A _horaInicial=!_tInicial:~0,2! 2>NUL)
 
-
 :::FINALES
 SET _centiSegFinal=!_tFinal:~9,2!
 SET _segFinal=!_tFinal:~6,2!
 SET _minFinal=!_tFinal:~3,2!
 SET _horaFinal=!_tFinal:~0,2!
-
 
 ::CONDICIONALES BUG OCTALES
 :::FINALES
@@ -84,13 +81,11 @@ IF [!_minFinal!] EQU [09] (SET /A _minFinal=9 2> NUL &&echo !_minFinal!) ELSE (S
 IF [!_horaFinal!] EQU [08] (SET /A _horaFinal=8 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
 IF [!_horaFinal!] EQU [09] (SET /A _horaFinal=9 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
 
-
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
-
-IF [!_centiSegInicial!] GTR [!_centiSegFinal!] (ECHO centi !_centiSegInicial! es mayor que !_centiSegFinal!)
-IF [!_segInicial!] GTR [!_segFinal!] (ECHO  seg !_segInicial! es mayor que !_segFinal!)
-IF [!_minInicial!] GTR [!_minFinal!] (ECHO min !_minInicial! es mayor que !_minFinal!)
-IF [!_horaInicial!] GTR [!_horaFinal!] (ECHO hora !_horaInicial! es mayor que !_horaFinal!)
+IF [!_centiSegInicial!] GTR [!_centiSegFinal!] (GOTO Function_setAlgoritmoConversionCentiSeg)
+IF [!_segInicial!] GTR [!_segFinal!] (GOTO Function_setAlgoritmoConversionSeg)
+IF [!_minInicial!] GTR [!_minFinal!] (GOTO Function_setAlgoritmoConversionMin)
+IF [!_horaInicial!] GTR [!_horaFinal!] (GOTO Function_setAlgoritmoConversionHora)
 
 REM DEBUG_tiempo final e incial
 ECHO inicial !_tInicial!
@@ -98,7 +93,16 @@ echo final !_tFinal!
 	
 
 REM PROCESO_ALGORITMO DE CONVERSION
-:Function_setAlgoritmoConversion
+:Function_setAlgoritmoConversionCentiSeg
+REM DEBUG_mensaje Function_setAlgoritmoConversionCentiSeg
+ECHO CentiSeg
+:Function_setAlgoritmoConversionSeg
+REM DEBUG_mensaje Function_setAlgoritmoConversionCentiSeg
+ECHO Seg
+:Function_setAlgoritmoConversionMin
+REM DEBUG_mensaje Function_setAlgoritmoConversionCentiSeg
+ECHO Min
+
 
 
 
