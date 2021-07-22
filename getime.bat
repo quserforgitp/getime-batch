@@ -36,13 +36,13 @@ SETLOCAL EnableDelayedExpansion
 
 :Function_setTiempoInicial
 REM PROCESO_almacenar Tiempo inicial
-SET _tInicial=19:11:58.06
+SET _tInicial=%TIME%
 
 TIMEOUT /T -1 >NUL
 
 :Function_setTiempoFinal
 REM PROCESO_almacenar Tiempo final
-SET _tFinal=19:11:58.17
+SET _tFinal=%TIME%
 
 :Function_setMostrarTiempos
 ECHO INICIO !_tInicial!
