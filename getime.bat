@@ -36,13 +36,18 @@ SETLOCAL EnableDelayedExpansion
 
 :Function_setTiempoInicial
 REM PROCESO_almacenar Tiempo inicial
-SET _tInicial=08:09:09.09
+SET _tInicial=19:11:58.06
 
 TIMEOUT /T -1 >NUL
 
 :Function_setTiempoFinal
 REM PROCESO_almacenar Tiempo final
-SET _tFinal=09:08:08.08
+SET _tFinal=19:11:58.17
+
+:Function_setMostrarTiempos
+ECHO INICIO !_tInicial!
+ECHO FINAL !_tFinal!
+REM SE CAMBIO inicio -> INICIAL , fin -> FINAL
 
 :Function_setUnidades
 REM PROCESO_obtener unidades por separado y almacenando como valores numéricos (mediante substring)
@@ -80,17 +85,22 @@ IF [!_minFinal!] EQU [08] (SET /A _minFinal=8 2> NUL &&echo !_minFinal!) ELSE (S
 IF [!_minFinal!] EQU [09] (SET /A _minFinal=9 2> NUL &&echo !_minFinal!) ELSE (SET /A _minFinal=!_tFinal:~3,2! 2>NUL)
 IF [!_horaFinal!] EQU [08] (SET /A _horaFinal=8 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
 IF [!_horaFinal!] EQU [09] (SET /A _horaFinal=9 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
-
+echo !_centiSegInicial!
+echo !_centiSegFinal!
+echo !_segInicial!
+echo !_segFinal!
+echo !_minInicial!
+echo !_minFinal!
+echo !_horaInicial!
+echo !_horaFinal!
+pause
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
-IF [!_centiSegInicial!] GTR [!_centiSegFinal!] (GOTO Function_setAlgoritmoConversionCentiSeg)
-IF [!_segInicial!] GTR [!_segFinal!] (GOTO Function_setAlgoritmoConversionSeg)
-IF [!_minInicial!] GTR [!_minFinal!] (GOTO Function_setAlgoritmoConversionMin)
-IF [!_horaInicial!] GTR [!_horaFinal!] (GOTO Function_setAlgoritmoConversionHora)
+IF !_centiSegInicial! GTR !_centiSegFinal! (GOTO Function_setAlgoritmoConversionCentiSeg) 
+IF !_segInicial! GTR !_segFinal! (GOTO Function_setAlgoritmoConversionSeg)
+IF !_minInicial! GTR !_minFinal! (GOTO Function_setAlgoritmoConversionMin) ELSE (GOTO Function_setAplicarFormula)
+REM SE ELIMINO LA HORA YA QUE NO ES POSIBLE QUE LA HORA INICIAL SEA MAYOR A LA FINAL Y SE AÑADIO EL ELSE -> 87
 
-REM DEBUG_tiempo final e incial
-ECHO inicial !_tInicial!
-echo final !_tFinal!
-	
+REM se movio el debug de echo tiempos a ->48	
 
 REM PROCESO_ALGORITMO DE CONVERSION
 :Function_setAlgoritmoConversionCentiSeg
