@@ -47,7 +47,7 @@ SET _tFinal=%TIME%
 :Function_setMostrarTiempos
 ECHO INICIO !_tInicial!
 ECHO FINAL !_tFinal!
-REM SE CAMBIO inicio -> INICIAL , fin -> FINAL
+
 
 :Function_setUnidades
 REM PROCESO_obtener unidades por separado y almacenando como valores numéricos (mediante substring)
@@ -85,15 +85,7 @@ IF [!_minFinal!] EQU [08] (SET /A _minFinal=8 2> NUL &&echo !_minFinal!) ELSE (S
 IF [!_minFinal!] EQU [09] (SET /A _minFinal=9 2> NUL &&echo !_minFinal!) ELSE (SET /A _minFinal=!_tFinal:~3,2! 2>NUL)
 IF [!_horaFinal!] EQU [08] (SET /A _horaFinal=8 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
 IF [!_horaFinal!] EQU [09] (SET /A _horaFinal=9 2> NUL &&echo !_horaFinal!) ELSE (SET /A _horaFinal=!_tFinal:~0,2! 2>NUL)
-echo !_centiSegInicial!
-echo !_centiSegFinal!
-echo !_segInicial!
-echo !_segFinal!
-echo !_minInicial!
-echo !_minFinal!
-echo !_horaInicial!
-echo !_horaFinal!
-pause
+
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
 IF !_centiSegInicial! GTR !_centiSegFinal! (
 	GOTO Function_setAlgoritmoConversionCentiSeg
@@ -105,18 +97,13 @@ IF !_minInicial! GTR !_minFinal! (
 	GOTO Function_setAlgoritmoConversionMin
 	) ELSE (
 		GOTO Function_setAplicarFormula
-	)
-REM SE ELIMINO LA HORA YA QUE NO ES POSIBLE QUE LA HORA INICIAL SEA MAYOR A LA FINAL Y SE AÑADIO EL ELSE -> 87
-
-REM se movio el debug de echo tiempos a ->48	
+	)	
 
 REM PROCESO_ALGORITMO DE CONVERSION
 :Function_setAlgoritmoConversionCentiSeg
 SET /A _centiSegFinal += 100
 SET /A _segFinal -= 1
-REM DEBUG_mensaje para poder saber si _centiSegFinal fue convertido junto a _segFinal
-ECHO el convertido centi !_centiSegFinal!
-ECHO el segfinal restado en una unidad !_segFinal!
+
 REM CONCICIONAL_para determinar si es necesaria la conversion siguiente unidad
 IF !_segInicial! GTR !_segFinal! (
 	GOTO Function_setAlgoritmoConversionSeg
@@ -131,9 +118,7 @@ IF !_segInicial! GTR !_segFinal! (
 :Function_setAlgoritmoConversionSeg
 SET /A _SegFinal += 60
 SET /A _minFinal -= 1
-REM DEBUG_mensaje para poder saber si _segFinal fue convertido junto a _minFinal
-ECHO el convertido seg !_SegFinal!
-ECHO el min restado en una unidad !_minFinal!
+
 IF !_minInicial! GTR !_minFinal! (
 	GOTO Function_setAlgoritmoConversionMin
 	) ELSE (
@@ -143,9 +128,7 @@ IF !_minInicial! GTR !_minFinal! (
 :Function_setAlgoritmoConversionMin
 SET /A _minFinal += 60
 SET /A _horaFinal -= 1
-REM DEBUG_mensaje para poder saber si _minFinal fue convertido junto a _horaFinal
-ECHO el convertido min !_minFinal!
-ECHO el hora restado en una unidad !_horaFinal!
+
 
 :Function_setAplicarFormula
 REM FORMULA_ Duracion = TF - TI.
