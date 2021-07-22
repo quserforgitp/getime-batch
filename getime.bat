@@ -37,8 +37,8 @@ SETLOCAL EnableDelayedExpansion
 :Function_setTiempoInicial
 REM PROCESO_almacenar Tiempo inicial
 SET _tInicial=%TIME%
-
-TIMEOUT /T -1 >NUL
+::quitar timeout y añadir soporte para programa
+TIMEOUT /T -1 >NUL 
 
 :Function_setTiempoFinal
 REM PROCESO_almacenar Tiempo final
@@ -95,9 +95,17 @@ echo !_horaInicial!
 echo !_horaFinal!
 pause
 REM CONCICIONAL_unidadesTi>unidadesTf -> ALGORITMO DE CONVERSION de lo contrario APLICAR FORMULA
-IF !_centiSegInicial! GTR !_centiSegFinal! (GOTO Function_setAlgoritmoConversionCentiSeg) 
-IF !_segInicial! GTR !_segFinal! (GOTO Function_setAlgoritmoConversionSeg)
-IF !_minInicial! GTR !_minFinal! (GOTO Function_setAlgoritmoConversionMin) ELSE (GOTO Function_setAplicarFormula)
+IF !_centiSegInicial! GTR !_centiSegFinal! (
+	GOTO Function_setAlgoritmoConversionCentiSeg
+	) 
+IF !_segInicial! GTR !_segFinal! (
+	GOTO Function_setAlgoritmoConversionSeg
+	)
+IF !_minInicial! GTR !_minFinal! (
+	GOTO Function_setAlgoritmoConversionMin
+	) ELSE (
+		GOTO Function_setAplicarFormula
+	)
 REM SE ELIMINO LA HORA YA QUE NO ES POSIBLE QUE LA HORA INICIAL SEA MAYOR A LA FINAL Y SE AÑADIO EL ELSE -> 87
 
 REM se movio el debug de echo tiempos a ->48	
@@ -111,10 +119,13 @@ ECHO el convertido centi !_centiSegFinal!
 ECHO el segfinal restado en una unidad !_segFinal!
 REM CONCICIONAL_para determinar si es necesaria la conversion siguiente unidad
 IF !_segInicial! GTR !_segFinal! (
-	GOTO Function_setAlgoritmoConversionSeg) ELSE (
+	GOTO Function_setAlgoritmoConversionSeg
+	) ELSE (
 		IF !_minInicial! GTR !_minFinal! (
-			GOTO Function_setAlgoritmoConversionMin) ELSE (
-				GOTO Function_setAplicarFormula)
+			GOTO Function_setAlgoritmoConversionMin
+			) ELSE (
+				GOTO Function_setAplicarFormula
+				)
 		)
 
 :Function_setAlgoritmoConversionSeg
@@ -124,8 +135,10 @@ REM DEBUG_mensaje para poder saber si _segFinal fue convertido junto a _minFinal
 ECHO el convertido seg !_SegFinal!
 ECHO el min restado en una unidad !_minFinal!
 IF !_minInicial! GTR !_minFinal! (
-	GOTO Function_setAlgoritmoConversionMin) ELSE (
-		GOTO Function_setAplicarFormula)
+	GOTO Function_setAlgoritmoConversionMin
+	) ELSE (
+		GOTO Function_setAplicarFormula
+		)
 
 :Function_setAlgoritmoConversionMin
 SET /A _minFinal += 60
